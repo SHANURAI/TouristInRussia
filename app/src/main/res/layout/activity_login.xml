@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Почта"
+        android:inputType="textEmailAddress"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Пароль"
+        android:inputType="textPassword"
+        android:layout_below="@id/editTextEmail"
+        android:layout_marginTop="16dp"/>
+    <CheckBox
+        android:id="@+id/saveAccountCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextPassword"
+        android:text="Сохранить вход" />
+
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Войти"
+        android:layout_below="@id/saveAccountCheckBox"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/textViewRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Зарегистрироваться"
+        android:layout_below="@id/buttonLogin"
+        android:layout_marginTop="16dp"/>
+    <TextView
+        android:id="@+id/textViewLoginAsGuest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Войти как гость"
+        android:layout_below="@id/textViewRegister"
+        android:layout_marginTop="16dp"/>
+
+
+</RelativeLayout>

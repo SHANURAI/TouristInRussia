@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Заголовок -->
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Инструкция для пользователя"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Пункт 1 -->
+    <TextView
+        android:id="@+id/textViewStep1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Шаг 1: ..."
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Пункт 2 -->
+    <TextView
+        android:id="@+id/textViewStep2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Шаг 2: ..."
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Пункт 3 -->
+    <TextView
+        android:id="@+id/textViewStep3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Шаг 3: ..."
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Добавьте другие пункты по необходимости -->
+
+</LinearLayout>

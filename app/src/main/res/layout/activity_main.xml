@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Место дня -->
+    <LinearLayout
+        android:id="@+id/layout_place_of_the_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:background="@color/gray"
+        >
+        <TextView
+            android:id="@+id/text_place_of_the_day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Место дня:"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
+        <TextView
+            android:id="@+id/name_of_place_of_the_day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Кремль"
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
+        <ImageView
+            android:id="@+id/image_place_of_the_day"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/kremlin"
+            />
+
+    </LinearLayout>
+
+    <!-- Кнопка "Список всех мест" -->
+    <Button
+        android:id="@+id/button_all_places"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_place_of_the_day"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="Список всех мест" />
+
+
+    <!-- Кнопка "Профиль" -->
+    <Button
+        android:id="@+id/button_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_all_places"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Профиль" />
+
+</RelativeLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Приложение &quot;Турист в России&quot; предназначено для всех, кто планирует посетить Россию и хочет получить информацию о туристических достопримечательностях, культуре, традициях, современной жизни и других интересных местах страны."
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp"/>
+
+
+    <TextView
+        android:id="@+id/textViewInstructionContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1. Установите приложение &quot;Турист в России&quot; на свое устройство.\n2. Откройте приложение и изучайте информацию о туристических местах, событиях и культуре России.\n3. Воспользуйтесь картой и навигацией для поиска интересующих вас мест.\n4. Получайте актуальные новости и советы для путешествий.\n5. Наслаждайтесь своим путешествием по России!"
+        android:textSize="16sp"/>
+
+</LinearLayout>

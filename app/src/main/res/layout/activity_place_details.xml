@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Фото достопримечательности -->
+        <ImageView
+            android:id="@+id/image_place"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/kremlin"
+            android:layout_marginBottom="16dp"/>
+        <CheckBox
+            android:id="@+id/addToFavorites"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image_place"
+            android:text="Добавить в избранное"
+            />
+        <!-- Название достопримечательности -->
+        <TextView
+            android:id="@+id/text_place_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addToFavorites"
+            android:text="Кремль"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <!-- Местоположение достопримечательности -->
+        <TextView
+            android:id="@+id/text_place_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_place_name"
+            android:text="Москва"
+            android:textSize="18sp"/>
+
+        <!-- Описание достопримечательности -->
+        <TextView
+            android:id="@+id/text_place_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_place_location"
+            android:text="Московский Кремль - это историческая крепость, политический и культурный центр России, расположенный в самом сердце Москвы, на берегу Москвы-реки. Этот удивительный комплекс архитектурных шедевров является символом величия и истории российской государственности.
+
+Внутри Кремля находится множество значимых сооружений, каждое из которых отражает разные периоды истории России:
+
+1. **Соборная Площадь**: Центральное место в Кремле, на которой расположены три крупнейших православных храма: Успенский собор, Архангельский собор и Благовещенский собор. Успенский собор был построен в XV веке и служил местом коронации российских монархов.
+
+2. **Царь-пушка и Царь-пушковая пушка**: Эти два огромных артиллерийских орудия, созданные в XVII веке, являются одними из самых больших в мире. Они служили символом военной мощи Российской империи.
+
+3. **Грановитая палата**: Это здание было построено в XVII веке и использовалось как официальная резиденция российских царей. Сегодня в Грановитой палате находится музей русского искусства XVII века.
+
+4. **Сенатская площадь и Сенатский дворец**: Это место, где находится официальная резиденция президента России. Сенатский дворец был построен в начале XIX века и представляет собой прекрасный образец архитектуры классицизма.
+
+5. **Арсенальная башня**: Одна из старейших башен Кремля, в которой находилось оружейное хранилище и казарма стражи. Сегодня она служит музеем российского оружия.
+
+Это лишь малая часть всего, что можно увидеть в Московском Кремле. Его архитектурная красота, историческое значение и культурное наследие делают его одним из самых важных и посещаемых мест в России."
+            android:textSize="16sp"/>
+
+    </RelativeLayout>
+</ScrollView>
