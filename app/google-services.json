@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "814118726154",
+    "project_id": "touristinrussia2024",
+    "storage_bucket": "touristinrussia2024.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814118726154:android:ef6ba62d680968a2db8df3",
+        "android_client_info": {
+          "package_name": "com.example.touristinrussia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBn7vrKbairmbMJKNbn_YtlV0nkRYqKBpg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

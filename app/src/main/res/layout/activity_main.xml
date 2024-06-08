@@ -11,8 +11,7 @@
         android:layout_marginTop="16dp"
         android:layout_centerHorizontal="true"
         android:orientation="vertical"
-        android:background="@color/gray"
-        >
+        android:background="#940000">
         <TextView
             android:id="@+id/text_place_of_the_day"
             android:layout_width="match_parent"
@@ -27,7 +26,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="Кремль"
             android:textSize="18sp"
             android:textColor="@android:color/black" />
         <ImageView
@@ -35,7 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/kremlin"
             />
 
     </LinearLayout>

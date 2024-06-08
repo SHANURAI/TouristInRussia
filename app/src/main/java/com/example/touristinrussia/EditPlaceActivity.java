@@ -16,60 +16,54 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import com.example.touristinrussia.databinding.ActivityRegisterBinding;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.example.touristinrussia.databinding.ActivityEditPlaceBinding;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
-
-public class RegisterActivity extends AppCompatActivity {
+public class EditPlaceActivity extends AppCompatActivity {
+    ActivityEditPlaceBinding binding;
     private ObjectAnimator rotateAnimator;
-    private FirebaseAuth mAuth;
-    private ActivityRegisterBinding binding;
+    private String placeId;
     private DatabaseReference mDataBase;
-    final private String USER_KEY = "User";
+    public Uri uploadUri = Uri.parse("https://firebasestorage" +
+            ".googleapis.com/v0/b/touristinrussia2024.appspot.com/o/DefaultPlace%2" +
+            "FThe-Good-Place.png?alt=media&token=475d31c0-9bed-4e87-b9a2-c093cc03cd13");
     private StorageReference mStorageRef;
-    public Uri uploadUri = Uri.parse("https://firebasestorage.googleapis.com" +
-            "/v0/b/touristinrussia2024.appspot.com/o/DefaultAvatar%2Favatar_default" +
-            ".jpg?alt=media&token=0f621007-407c-4c3d-b85e-f7dd7703ad61");
-
+    final private String PLACE_KEY = "Place";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
+        binding = ActivityEditPlaceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.progressBarLayout.setVisibility(View.GONE);
-
-        mAuth = FirebaseAuth.getInstance();
-        mDataBase = FirebaseDatabase.getInstance().getReference(USER_KEY);
-        mStorageRef = FirebaseStorage.getInstance().getReference("Avatar");
-        binding.buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerUser();
-            }
-        });
-        binding.buttonChooseImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                chooseImage();
-            }
-        });
+        placeId = getIntent().getStringExtra("placeId");
+        mDataBase = FirebaseDatabase.getInstance().getReference(PLACE_KEY).child(placeId);
+        mStorageRef = FirebaseStorage.getInstance().getReference(PLACE_KEY);
+        loadPlaceData();
+        binding.saveButton.setOnClickListener(v -> savePlace());
+        binding.buttonChooseImage.setOnClickListener(v -> chooseImage());
     }
     private void chooseImage(){
         Intent intentChooser = new Intent();
@@ -83,16 +77,15 @@ public class RegisterActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && data != null && data.getData() != null){
             if(resultCode == RESULT_OK){
-                binding.userImageView.setImageURI(data.getData());
+                binding.imageView.setImageURI(data.getData());
                 uploadImage();
             }
         }
     }
-
     private void uploadImage(){
-        Bitmap bitmap = ((BitmapDrawable) binding.userImageView.getDrawable()).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable) binding.imageView.getDrawable()).getBitmap();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
         byte[] bytes = byteArrayOutputStream.toByteArray();
         final StorageReference mRef = mStorageRef.child(System.currentTimeMillis() + "img");
         UploadTask uploadTask = mRef.putBytes(bytes);
@@ -108,18 +101,37 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
-
-    private void registerUser() {
+    private void loadPlaceData() {
+        mDataBase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Place place = dataSnapshot.getValue(Place.class);
+                    if (place != null) {
+                        binding.editTextName.setText(place.getName());
+                        binding.editTextCity.setText(place.getCity());
+                        binding.editTextDescription.setText(place.getDescription());
+                        uploadUri = Uri.parse(place.getImageUri());
+                        Picasso.get().load(place.getImageUri()).into(binding.imageView);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(EditPlaceActivity.this, "Ошибка при загрузке данных", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void savePlace() {
         String name = binding.editTextName.getText().toString().trim();
-        String email = binding.editTextEmail.getText().toString().trim();
-        String password = binding.editTextPassword.getText().toString().trim();
-        if (TextUtils.isEmpty(email)) {
-            binding.editTextEmail.setError("Введите ваш email");
+        String city = binding.editTextCity.getText().toString().trim();
+        String description = binding.editTextDescription.getText().toString().trim();
+        if (TextUtils.isEmpty(name)) {
+            binding.editTextName.setError("Введите название достопримечательности");
             return;
         }
-        if (TextUtils.isEmpty(password)) {
-            binding.editTextPassword.setError("Введите пароль");
+        if (TextUtils.isEmpty(city)) {
+            binding.editTextCity.setError("Введите город достопримечательности");
             return;
         }
         startAnimation();
@@ -127,33 +139,21 @@ public class RegisterActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            FirebaseUser firebaseUser = task.getResult().getUser(); // Получение объекта FirebaseUser
-                            String userId = firebaseUser.getUid(); // Получение UID пользователя
-                            List<String> stringList = new ArrayList<String>();
-                            User newUser = new User(uploadUri.toString(), name,
-                                    email, false, stringList);
-                            mDataBase.child(userId).setValue(newUser);
-                            Toast.makeText(getApplicationContext(), "Регистрация выполнена успешно", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                            finish();
-                        }
-                        else {
-                            Toast.makeText(getApplicationContext(), "Регистрация не выполнена", Toast.LENGTH_SHORT).show();
-                        }
-                        finishAnimation();
+                Place updatedPlace = new Place(placeId, name, city, description, uploadUri.toString());
+                mDataBase.setValue(updatedPlace).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(EditPlaceActivity.this, "Достопримечательность обновлена", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(EditPlaceActivity.this, "Ошибка при обновлении", Toast.LENGTH_SHORT).show();
                     }
                 });
+                finishAnimation();
             }
         }, 3000);
 
     }
+
     private void startAnimation(){
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         rotateAnimator = ObjectAnimator.ofFloat(binding.progressBar, "rotation", 0f, 360f);
         rotateAnimator.setDuration(1000);
         rotateAnimator.setRepeatCount(ObjectAnimator.INFINITE);
@@ -169,7 +169,7 @@ public class RegisterActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         menu.findItem(R.id.info).setVisible(false);
-        getSupportActionBar().setTitle("Регистрация");
+        getSupportActionBar().setTitle("Редактирование достопримечательности");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.blue)));
         return super.onCreateOptionsMenu(menu);
@@ -177,8 +177,9 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(this, LoginActivity.class);
+            Intent intent = new Intent(this, AllPlacesActivity.class);
             startActivity(intent);
+            finishAffinity();
             return true;
         }
         return super.onOptionsItemSelected(item);

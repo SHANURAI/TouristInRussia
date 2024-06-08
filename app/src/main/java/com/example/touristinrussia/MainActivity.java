@@ -14,16 +14,29 @@ import androidx.core.content.ContextCompat;
 
 import com.example.touristinrussia.databinding.ActivityAllPlacesBinding;
 import com.example.touristinrussia.databinding.ActivityMainBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
+    String placeId = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        fetchRandomPlace();
+
         binding.buttonProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,9 +52,50 @@ public class MainActivity extends AppCompatActivity {
         binding.layoutPlaceOfTheDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, PlaceDetailsActivity.class));
+                Intent intent = new Intent(getApplicationContext(), PlaceDetailsActivity.class);
+                intent.putExtra("placeId", placeId);
+                intent.putExtra("activity", "MainActivity");
+                startActivity(intent);
             }
         });
+    }
+
+    private void fetchRandomPlace() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Place");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Place> places = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Place place = snapshot.getValue(Place.class);
+                    places.add(place);
+                }
+
+                if (!places.isEmpty()) {
+                    Random random = new Random();
+                    int randomIndex = random.nextInt(places.size());
+                    Place randomPlace = places.get(randomIndex);
+                    displayPlaceOfTheDay(randomPlace);
+                } else {
+                    displayPlaceOfTheDay(null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Обработка ошибок
+            }
+        });
+    }
+    private void displayPlaceOfTheDay(Place place) {
+        if(place != null) {
+            placeId = place.getId();
+            binding.nameOfPlaceOfTheDay.setText(place.getName());
+            Picasso.get().load(place.getImageUri()).into(binding.imagePlaceOfTheDay);
+        } else {
+            binding.nameOfPlaceOfTheDay.setText("Неизвестно");
+            binding.layoutPlaceOfTheDay.setClickable(false);
+        }
     }
 
     @Override

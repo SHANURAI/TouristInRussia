@@ -19,19 +19,13 @@
         android:inputType="textPassword"
         android:layout_below="@id/editTextEmail"
         android:layout_marginTop="16dp"/>
-    <CheckBox
-        android:id="@+id/saveAccountCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextPassword"
-        android:text="Сохранить вход" />
 
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Войти"
-        android:layout_below="@id/saveAccountCheckBox"
+        android:layout_below="@id/editTextPassword"
         android:layout_marginTop="16dp"/>
 
     <TextView

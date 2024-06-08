@@ -2,13 +2,14 @@
 <!-- activity_register.xml -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <ImageView
         android:src="@drawable/avatar_default"
         android:id="@+id/userImageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_margin="25dp"
         android:background="@color/blue"
         android:layout_centerHorizontal="true"
@@ -27,32 +28,27 @@
         android:layout_below="@id/buttonChooseImage"
         android:hint="Имя"
         />
-    <EditText
-        android:id="@+id/editTextEmail"
+
+    <LinearLayout
+        android:id="@+id/buttonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Почта"
-        android:inputType="textEmailAddress"
         android:layout_below="@id/editTextName"
-        android:layout_marginTop="16dp"/>
+        >
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сохранить"
+            android:layout_marginTop="16dp"/>
+        <Button
+            android:id="@+id/buttonChangePassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Изменить пароль"
+            android:layout_marginTop="16dp"/>
 
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Пароль"
-        android:inputType="textPassword"
-        android:layout_below="@id/editTextEmail"
-        android:layout_marginTop="16dp"/>
-
-
-    <Button
-        android:id="@+id/buttonRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Зарегистрироваться"
-        android:layout_below="@id/editTextPassword"
-        android:layout_marginTop="16dp"/>
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/progressBarLayout"
