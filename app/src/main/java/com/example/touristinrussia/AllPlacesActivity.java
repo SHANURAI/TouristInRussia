@@ -72,6 +72,7 @@ public class AllPlacesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(AllPlacesActivity.this, AddPlaceActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
@@ -102,19 +103,24 @@ public class AllPlacesActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Достопримечательности");
         menu.findItem(R.id.info).setVisible(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.blue)));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary)));
         return super.onCreateOptionsMenu(menu);
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == android.R.id.home) {
             startActivity(new Intent(this, MainActivity.class));
+            finishAffinity();
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-    public void onBackPressed() {
-        super.onBackPressed();
+    @Override
+    public void finish() {
         startActivity(new Intent(this, MainActivity.class));
+        finishAffinity();
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.touristinrussia;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -61,6 +62,10 @@ public class FavoritePlaceAdapter extends RecyclerView.Adapter<FavoritePlaceAdap
                 intent.putExtra("placeId", place.getId());
                 intent.putExtra("activity", "FavoritePlacesActivity");
                 context.startActivity(intent);
+                // Анимация перехода
+                if (context instanceof Activity) {
+                    ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
             }
         });
 

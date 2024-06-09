@@ -1,7 +1,13 @@
 package com.example.touristinrussia;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,6 +18,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -26,17 +33,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.yandex.mapkit.Animation;
+import com.yandex.mapkit.MapKit;
+import com.yandex.mapkit.MapKitFactory;
+import com.yandex.mapkit.geometry.Point;
+import com.yandex.mapkit.map.CameraPosition;
+import com.yandex.mapkit.map.Map;
+import com.yandex.mapkit.mapview.MapView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlaceDetailsActivity extends AppCompatActivity {
     private DatabaseReference mDataBase;
+    private static final String CHANNEL_ID = "default_channel";
     ActivityPlaceDetailsBinding binding;
     String name = "";
     String placeId = "";
     String activity = "";
     FirebaseUser user;
+    Place place;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +67,7 @@ public class PlaceDetailsActivity extends AppCompatActivity {
         mDataBase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Place place = dataSnapshot.getValue(Place.class);
+                place = dataSnapshot.getValue(Place.class);
                 if (place != null) {
                     name = place.getName();
                     getSupportActionBar().setTitle(place.getName());
@@ -86,6 +102,8 @@ public class PlaceDetailsActivity extends AppCompatActivity {
                         favorites.remove(placeId);
                         Toast.makeText(getApplicationContext(), "Удалено из избранного", Toast.LENGTH_SHORT).show();
                     } else if (!favorites.contains(placeId) && isChecked){
+                        showNotification("Избранное", place.getName() + " теперь в " +
+                                "избранном! Проверьте страницу профиля");
                         favorites.add(placeId);
                         Toast.makeText(getApplicationContext(), "Добавлено в избранное", Toast.LENGTH_SHORT).show();
                     }
@@ -97,6 +115,16 @@ public class PlaceDetailsActivity extends AppCompatActivity {
                     Log.e("Favorite", "Error toggling favorite status", databaseError.toException());
                 }
             });
+        });
+        binding.buttonToMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+                intent.putExtra("latitude", place.getLatitude());
+                intent.putExtra("longitude", place.getLongitude());
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
         });
     }
 
@@ -132,19 +160,13 @@ public class PlaceDetailsActivity extends AppCompatActivity {
         if(name.isEmpty()) name = "Достопримечательность";
         getSupportActionBar().setTitle(name);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.blue)));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary)));
         return super.onCreateOptionsMenu(menu);
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == android.R.id.home) {
-            if(activity.equals("AllPlacesActivity")){
-                startActivity(new Intent(this, AllPlacesActivity.class));
-            } else if (activity.equals("FavoritePlacesActivity")){
-                startActivity(new Intent(this, FavoritePlacesActivity.class));
-            } else {
-                finish();
-            }
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -152,13 +174,56 @@ public class PlaceDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (activity.equals("AllPlacesActivity")) {
-            startActivity(new Intent(this, AllPlacesActivity.class));
-        } else if (activity.equals("FavoritePlacesActivity")) {
-            startActivity(new Intent(this, FavoritePlacesActivity.class));
-        } else if (activity.equals("MainActivity")){
-            startActivity(new Intent(this, MainActivity.class));
+        finish();
+
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+    // Метод для отображения уведомления
+    private void showNotification(String title, String message) {
+        // Создаем канал уведомлений (необходимо для Android 8.0 и выше)
+        createNotificationChannel();
+        Intent intent = new Intent(this, FavoritePlacesActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE // FLAG_IMMUTABLE нужен для Android 12 и выше
+        );
+        // Создаем объект уведомления
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.app_icon) // Убедитесь, что иконка существует
+                .setContentTitle(title)
+                .setContentText(message)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.app_icon)); // Убедитесь, что иконка существует
+
+        // Получаем экземпляр менеджера уведомлений
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Отображаем уведомление
+        if (notificationManager != null) {
+            notificationManager.notify(0, builder.build());
         }
     }
+    // Метод для создания канала уведомлений (для Android 8.0 и выше)
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Default Channel";
+            String description = "Channel for default notifications";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
 
+            // Регистрация канала с системой
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
+    }
 }

@@ -96,7 +96,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         menu.findItem(R.id.info).setVisible(false);
         getSupportActionBar().setTitle("Смена пароля");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.blue)));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary)));
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -104,9 +104,14 @@ public class ChangePasswordActivity extends AppCompatActivity {
         if(item.getItemId() == android.R.id.home) {
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }

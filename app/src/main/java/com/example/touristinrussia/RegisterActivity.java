@@ -138,8 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     email, false, stringList);
                             mDataBase.child(userId).setValue(newUser);
                             Toast.makeText(getApplicationContext(), "Регистрация выполнена успешно", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                            finish();
+                            loginUser(email, password);
                         }
                         else {
                             Toast.makeText(getApplicationContext(), "Регистрация не выполнена", Toast.LENGTH_SHORT).show();
@@ -151,9 +150,32 @@ public class RegisterActivity extends AppCompatActivity {
         }, 3000);
 
     }
+
+    private void loginUser(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this,
+                new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Вход выполнен успешно", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finishAffinity();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Вход не выполнен",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+
     private void startAnimation(){
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        binding.buttonChooseImage.setEnabled(false);
+        binding.editTextName.setEnabled(false);
+        binding.editTextEmail.setEnabled(false);
+        binding.editTextPassword.setEnabled(false);
+        binding.buttonRegister.setEnabled(false);
         rotateAnimator = ObjectAnimator.ofFloat(binding.progressBar, "rotation", 0f, 360f);
         rotateAnimator.setDuration(1000);
         rotateAnimator.setRepeatCount(ObjectAnimator.INFINITE);
@@ -171,7 +193,7 @@ public class RegisterActivity extends AppCompatActivity {
         menu.findItem(R.id.info).setVisible(false);
         getSupportActionBar().setTitle("Регистрация");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.blue)));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary)));
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -179,8 +201,14 @@ public class RegisterActivity extends AppCompatActivity {
         if(item.getItemId() == android.R.id.home) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

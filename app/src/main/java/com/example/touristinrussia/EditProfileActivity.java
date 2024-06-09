@@ -72,6 +72,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
@@ -161,6 +162,10 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
     private void startAnimation(){
+        binding.editTextName.setEnabled(false);
+        binding.buttonChooseImage.setEnabled(false);
+        binding.buttonSave.setEnabled(false);
+        binding.buttonChangePassword.setEnabled(false);
         rotateAnimator = ObjectAnimator.ofFloat(binding.progressBar, "rotation", 0f, 360f);
         rotateAnimator.setDuration(1000);
         rotateAnimator.setRepeatCount(ObjectAnimator.INFINITE);
@@ -169,6 +174,10 @@ public class EditProfileActivity extends AppCompatActivity {
         binding.progressBarLayout.setVisibility(View.VISIBLE);
     }
     private void finishAnimation(){
+        binding.editTextName.setEnabled(true);
+        binding.buttonChooseImage.setEnabled(true);
+        binding.buttonSave.setEnabled(true);
+        binding.buttonChangePassword.setEnabled(true);
         rotateAnimator.cancel();
         binding.progressBarLayout.setVisibility(View.GONE);
     }
@@ -178,7 +187,7 @@ public class EditProfileActivity extends AppCompatActivity {
         menu.findItem(R.id.info).setVisible(false);
         getSupportActionBar().setTitle("Редактирование профиля");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.blue)));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary)));
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -186,6 +195,7 @@ public class EditProfileActivity extends AppCompatActivity {
         if(item.getItemId() == android.R.id.home) {
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             finishAffinity();
             return true;
         }
@@ -194,5 +204,6 @@ public class EditProfileActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(this, ProfileActivity.class));
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

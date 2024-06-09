@@ -1,47 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="20dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
 
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Почта"
-        android:inputType="textEmailAddress"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="100dp"
+        android:text="Вход в аккаунт"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="25sp"
+        android:layout_margin="20dp"
+        />
 
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/emailAndPassword"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Пароль"
-        android:inputType="textPassword"
-        android:layout_below="@id/editTextEmail"
-        android:layout_marginTop="16dp"/>
+        android:orientation="vertical">
+
+        <EditText
+            android:background="@drawable/rounded_corners"
+            android:id="@+id/editTextEmail"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:paddingStart="20dp"
+            android:hint="Почта"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:background="@drawable/rounded_corners"
+            android:paddingStart="20dp"
+            android:id="@+id/editTextPassword"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/editTextEmail"
+            android:layout_margin="10dp"
+            android:hint="Пароль"
+            android:inputType="textPassword" />
+    </LinearLayout>
 
     <Button
+        android:backgroundTint ="@color/green"
         android:id="@+id/buttonLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/emailAndPassword"
+        android:layout_marginTop="20dp"
         android:text="Войти"
-        android:layout_below="@id/editTextPassword"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginBottom="20dp"
+        />
 
     <TextView
         android:id="@+id/textViewRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Зарегистрироваться"
         android:layout_below="@id/buttonLogin"
-        android:layout_marginTop="16dp"/>
+        android:text="Зарегистрироваться"/>
+
     <TextView
         android:id="@+id/textViewLoginAsGuest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Войти как гость"
         android:layout_below="@id/textViewRegister"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginBottom="272dp"
+        android:text="Войти как гость"
+        android:layout_marginTop="10dp"
+        />
 
 
-</RelativeLayout>
+</LinearLayout>

@@ -36,13 +36,15 @@ android {
 }
 
 dependencies {
+    implementation ("com.yandex.android:maps.mobile:4.6.1-lite")
+    implementation ("io.github.inflationx:calligraphy3:3.1.1")
+    implementation ("io.github.inflationx:viewpump:2.0.3")
     implementation ("com.squareup.picasso:picasso:2.8")
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("androidx.navigation:navigation-fragment:2.7.7")
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation("com.google.firebase:firebase-database:20.3.0")
-//    implementation("com.android.support:design:28.0.0")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
