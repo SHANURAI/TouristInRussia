@@ -5,7 +5,6 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Заголовок -->
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
@@ -15,33 +14,47 @@
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
 
-    <!-- Пункт 1 -->
     <TextView
         android:id="@+id/textViewStep1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Шаг 1: ..."
+        android:text="@string/instruction1"
         android:textSize="16sp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/colorPrimary"
+        />
 
-    <!-- Пункт 2 -->
     <TextView
         android:id="@+id/textViewStep2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Шаг 2: ..."
+        android:text="@string/instruction2"
         android:textSize="16sp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/green"
+        />
 
-    <!-- Пункт 3 -->
     <TextView
         android:id="@+id/textViewStep3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Шаг 3: ..."
+        android:text="@string/instruction3"
         android:textSize="16sp"
         android:layout_marginBottom="8dp"/>
 
-    <!-- Добавьте другие пункты по необходимости -->
+    <TextView
+        android:id="@+id/textViewStep4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/instruction4"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+    <TextView
+        android:id="@+id/textViewStep5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/instruction5"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
 
 </LinearLayout>

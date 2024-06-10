@@ -14,16 +14,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
 import com.example.touristinrussia.databinding.ActivityPlaceDetailsBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,14 +27,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-import com.yandex.mapkit.Animation;
-import com.yandex.mapkit.MapKit;
-import com.yandex.mapkit.MapKitFactory;
-import com.yandex.mapkit.geometry.Point;
-import com.yandex.mapkit.map.CameraPosition;
-import com.yandex.mapkit.map.Map;
-import com.yandex.mapkit.mapview.MapView;
-
 import java.util.ArrayList;
 import java.util.List;
 

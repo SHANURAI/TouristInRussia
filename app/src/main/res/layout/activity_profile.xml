@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
-
-    <!-- Имя пользователя -->
 
     <ImageView
         android:id="@+id/userImageView"
@@ -29,7 +26,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"/>
 
-    <!-- Электронная почта -->
     <TextView
         android:id="@+id/textViewEmail"
         android:layout_width="wrap_content"
@@ -38,7 +34,6 @@
         android:textSize="16sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"/>
-    <!-- Электронная почта -->
     <TextView
         android:id="@+id/textViewIsAdmin"
         android:layout_width="wrap_content"
@@ -48,7 +43,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"/>
 
-    <!-- Кнопка редактировать профиль -->
     <Button
         android:id="@+id/buttonEditProfile"
         android:layout_width="wrap_content"
@@ -58,7 +52,6 @@
         android:layout_marginTop="16dp"/>
 
 
-    <!-- Кнопка для перехода в список избранных мест -->
     <Button
         android:id="@+id/buttonFavoritePlaces"
         android:layout_width="wrap_content"
@@ -67,7 +60,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"/>
 
-    <!-- Кнопка выхода из профиля -->
     <Button
         android:backgroundTint="@color/red"
         android:id="@+id/buttonLogout"

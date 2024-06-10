@@ -8,7 +8,6 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- Фото достопримечательности -->
         <ImageView
             android:id="@+id/imageViewPlace"
             android:layout_width="match_parent"
@@ -24,7 +23,6 @@
             android:button="@drawable/custom_checkbox"
             android:text="Добавить в избранное"
             />
-        <!-- Название достопримечательности -->
         <TextView
             android:id="@+id/textViewPlaceName"
             android:layout_width="wrap_content"
@@ -33,7 +31,6 @@
             android:textSize="24sp"
             android:textStyle="bold"/>
 
-        <!-- Местоположение достопримечательности -->
         <TextView
             android:id="@+id/textViewCityName"
             android:layout_width="wrap_content"
@@ -42,7 +39,6 @@
             android:layout_margin="5dp"
             android:textSize="18sp"/>
 
-        <!-- Описание достопримечательности -->
         <TextView
             android:id="@+id/textViewDescription"
             android:layout_width="match_parent"

@@ -7,17 +7,12 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.geometry.Point;
 import com.yandex.mapkit.map.CameraPosition;
-import com.yandex.mapkit.map.IconStyle;
-import com.yandex.mapkit.map.MapObjectCollection;
 import com.yandex.mapkit.map.PlacemarkMapObject;
 import com.yandex.mapkit.mapview.MapView;
-import com.yandex.runtime.image.AnimatedImageProvider;
-import com.yandex.runtime.image.ImageProvider;
 
 public class MapActivity extends AppCompatActivity {
     private MapView mapView;
